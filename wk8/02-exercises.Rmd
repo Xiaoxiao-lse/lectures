@@ -15,10 +15,10 @@ In this document we will study vectorised code and the substantial speedups it c
 # elements of the vector x
 
 # Loading the relevant package to use the `address()` function
-library(____)
+library(pryr)
 
 # Creating an exemplary vector with 10 elements
-x <- ____
+x <- 1:10
 
 # Creating an empty vector with correct final length
 vector_of_squares <- numeric(length(x))
@@ -26,7 +26,7 @@ vector_of_squares <- numeric(length(x))
 for (i in 1:length(x)) {
   
   # Replacing the relevant element of the empty vector with the associated square
-  vector_of_squares[i] <- x[i]*x[____]
+  vector_of_squares[i] <- x[i]*x[i]
   
   # Printing out the memory address of the vector
   print(address(vector_of_squares))
