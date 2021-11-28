@@ -130,10 +130,11 @@ We can set the language of a code chunk, by specifying "r" or "python" in the cu
 ```{python}
 # Importing modules.
 
-import pandas as pd
+#import pandas as pd
 import numpy as np
 import random
 
+print(random.random())
 ```
 
 Note that when we change what language we are using, the variables and objects we see in the Enviroment panel change.
@@ -234,6 +235,8 @@ A small trick regarding logical values is that they correspond to `1` and `0`, w
 x <- c(TRUE, TRUE, FALSE)
 x * 2
 sum(x)
+y2 <- c(1,2,3)
+y2[x]
 ```
 
 There are a few special values: `NA`, which denotes a missing value, and `NaN`, which means Not a number. The values `Inf` and `-Inf` are considered numeric. `NULL` denotes a value that is undefined.
@@ -380,16 +383,16 @@ Lists are an even more flexible way of combining multiple objects into a single 
 
 ```{r}
 list1 <- list(some_numbers = 1:10, some_letters = c("a", "b", "c"))
-list1
+list1[["some_numbers"]]
 ```
 
 or even vectors and data frames, or multiple data frames:
 
 ```{r}
-schools <- list(school_name = "LSE", students = students, 
+schools <- list(school_name = list(c("LSE",1),123), students = students, 
                     faculty = data.frame(name = c("Kelly Jones", "Matt Smith"), 
                                          age = c(41, 55)))
-schools
+schools[[1]][[1]][1]
 ```
 
 You can access a list component in several different ways:
@@ -451,7 +454,15 @@ for (x in teachers) {
 }
 
 ```
+```{python}
+teachers = ["Milena", "Patrick", "Sian","x"]
 
+for x in teachers :
+  if (x == "Sian") :
+    continue
+  print(x)
+  
+```
 The loop will stop at `Sian` because we have chosen to finish the loop by using the break statement when x is equal to `Sian`(x == `Sian`). We can also use if / else.
  
 ```{r}
@@ -529,6 +540,16 @@ print(ls)
 ```
 
 _Your cell here._
+```{r}
+ls = 1:100
+for (i in 1:100){
+  if (i %% 3 ==0){
+    ls[i] <- NaN
+  }
+}
+
+ls
+```
 
 ```{python}
 # Exercise 2: Use a for-loop with if-statement to identify the even integers.
@@ -546,6 +567,20 @@ print(summ)
 
 _Your cell here._
 
+```{r}
+ls =  list(1, 3, 2, 4.5, 7, 8, 10, 3, 5, 4, 7, 3.33)
+
+summ = 0
+
+for ( i in ls){
+  if (i %% 2 == 0){
+    summ = summ+ i
+  }
+}
+summ
+
+ls
+```
 #### Functions Exercises
 
 In Week 04, we looked at at defining our own functions. Translate the functions from the class exercises (below) into R.
@@ -571,7 +606,28 @@ print(zerolist)
 
 ```
 
+
+
 _Your cell here._
+
+```{r}
+zero_list <- function(alist){
+  
+  newlist <- alist
+  for (i in 1:length(alist)){
+    newlist[[i]]=0
+  }
+  
+  
+  return (newlist)
+}
+
+mylist = list(1, 2, 3)
+zero_list(mylist)  
+
+mylist
+```
+
 
 ```{python}
 
@@ -594,7 +650,9 @@ print_professions(scientists)
 ```
 
 _Your cell here._
+```{r}
 
+```
 ### Vectorizing
 
 Vectorizing is a efficient alternative to for loops in R. Vectorization is the operation of converting repeated operations on simple numbers (“scalars”) into single operations on vectors or matrices. 
@@ -620,11 +678,11 @@ v2 <- 100:149
 
 # Replicate
 v3 <- rep(0)
+print(v3)
 # loop through first 10 values
 for (i in 1:n) { 
 	v3[i] <-v1[i] + v2[i] 
 }
-
 v3
 ```
 
@@ -633,6 +691,8 @@ The *native* vectorized form of the code above is:
 ```{r}
 v4 = v1 + v2
 v4
+
+
  
 ```
 It is *native* because R can recognize all the arithmetic operators as acting on vectors and matrices. Doesn't this look a lot simpler to code than list comprehensions in python. 
